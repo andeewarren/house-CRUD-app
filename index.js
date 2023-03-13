@@ -74,8 +74,10 @@ class DOMManager {
 
     static addRoom(id) {
         for (let house of this.houses) {
+            console.log(house);
             if (house._id == id) {
-                house.rooms.push(new Room($(`#${house._id}-room-name`).val(), $(`#${house._id}-room-name`).val()));
+                console.log(house._id, id);
+                house.rooms.push(new Room($(`#${house._id}-room-name`).val(), $(`#${house._id}-room-area`).val()));
                 HouseService.updateHouse(house)
                     .then(() => {
                         return HouseService.getAllHouses();
@@ -110,7 +112,7 @@ class DOMManager {
                 `<div id="${house._id}" class="card">
                     <div class="card-header">
                         <h2>${house.name}</h2>
-                        <button class="btn btn-danger" onclick="DOMManager.deleteHouse("${house._id}")">Delete</button>
+                        <button class="btn btn-danger" onclick="DOMManager.deleteHouse('${house._id}')">Delete</button>
                     </div>
                     <div class="card-body">
                         <div class="card">
@@ -123,7 +125,7 @@ class DOMManager {
                                 </div>
                             </div>
                         </div>
-                        <button id="${house._id}-new-room" onclick="DOMManger.addRoom('${house._id}')" class="btn btn-primary form-control">Add</button>
+                        <button id="${house._id}-new-room" onclick="DOMManager.addRoom('${house._id}')" class="btn btn-primary form-control">Add</button>
                     </div>
                 </div><br>`
             );
@@ -141,6 +143,7 @@ class DOMManager {
 
 $('#create-new-house').click(() => {
     DOMManager.createHouse($('#new-house-name').val());
+    // console.log("hello");
     $('#new-house-name').val('');
 });
 
